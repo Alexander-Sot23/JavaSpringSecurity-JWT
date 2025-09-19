@@ -289,14 +289,21 @@ Elimina un préstamo.
  git clone https://github.com/Alexander-Sot23/JavaSpringSecurity-JWT.git
  cd JavaSpringSecurity-JWT
  ```
-2. Configurar la base de datos en `application.properties`:
+2. Configurar la base de datos en `application.properties` (puedes eliminar los comentarios '#'):
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/tu_basedatos
+spring.application.name=JavaSpringSecurity-JWT
+#
+spring.datasource.url=jdbc:mysql://localhost:3306/tu_base_de_datos
 spring.datasource.username=tu_usuario
 spring.datasource.password=tu_contraseña
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
-jwt.secret=tu-clave-secreta-para-jwt
-jwt.expiration=86400000
+#
+jwt.secret=tu_clave_secreta
+jwt.expiration=30				#30 minutos antes de expirar
 ```
 3. Construir y ejecutar la aplicación:
 ```
