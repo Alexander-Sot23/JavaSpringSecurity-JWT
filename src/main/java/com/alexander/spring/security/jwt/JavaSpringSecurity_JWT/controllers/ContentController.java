@@ -2,7 +2,6 @@ package com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.controllers;
 
 import com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.entities.MyUser;
 import com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.models.LoginFormM;
-import com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.repositories.MyUserRepository;
 import com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.services.MyUserDetailsService;
 import com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.services.MyUserService;
 import com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.webtoken.JWTService;
@@ -38,7 +37,14 @@ public class ContentController {
     private JWTService jwtService;
 
     @PostMapping("/register/user")
-    public ResponseEntity<?> createUser(@Valid @RequestBody MyUser myUser){
+    public ResponseEntity<?> createUserBasic(@Valid @RequestBody MyUser myUser){
+        myUser.setPassword(passwordEncoder.encode(myUser.getPassword()));
+        myUser.setRoles("USER");
+        return ResponseEntity.status(HttpStatus.CREATED).body(myUserService.save(myUser));
+    }
+
+    @PostMapping("/admin/register/user")
+    public ResponseEntity<?> createUserAdmin(@Valid @RequestBody MyUser myUser){
         myUser.setPassword(passwordEncoder.encode(myUser.getPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body(myUserService.save(myUser));
     }

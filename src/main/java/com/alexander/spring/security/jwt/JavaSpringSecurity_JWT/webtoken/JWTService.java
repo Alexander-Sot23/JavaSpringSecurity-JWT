@@ -3,6 +3,7 @@ package com.alexander.spring.security.jwt.JavaSpringSecurity_JWT.webtoken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,14 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class JWTService {
 
-    private final String SECRET = "F053497BDA789FB513672116ED2BDDFB731676F68DF0C9304562135A73BF1B066ADCC3A6B23B46239C6BE3BEF3E1DBF9074FF284D1981D60437302E57D69FB0E";
-    private final Long VALIDITY = TimeUnit.MINUTES.toMillis(30);
+    @Value("${jwt.secret}")
+    private String SECRET;
+
+    @Value("${jwt.expiration}")
+    private int expiration;
 
     public String generateToken(UserDetails userDetails){
+        long VALIDITY = TimeUnit.MINUTES.toMillis(expiration);
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(Date.from(Instant.now()))
