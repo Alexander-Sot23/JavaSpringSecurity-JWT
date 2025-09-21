@@ -311,6 +311,18 @@ mvn spring-boot:run
 ```
 La API estará disponible en: `http://localhost:8080`
 
+##Generación de la Clave Secreta
+Para generar una clave secreta segura para JWT, el proyecto incluye una clase de prueba que puedes ejecutar:
+1. Ejecuta la clase de prueba `JWTSecretMasterTest` que se encuentra en `src/test/java`:
+```
+mvn test -Dtest=JWTSecretMasterTest
+```
+2. Copia la clave generada que se mostrará en la consola (es una cadena hexadecimal larga).
+3. Pega la clave en `application.properties`:
+```
+jwt.secret=tu_clave_generada_aqui
+```
+
 ## Configuración de seguridad
 El sistema utiliza JWT para autenticación. Para acceder a los endpoints protegidos:
 
